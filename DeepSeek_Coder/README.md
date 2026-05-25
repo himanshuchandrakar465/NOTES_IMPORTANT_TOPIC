@@ -1,40 +1,134 @@
-# DeepSeek Coder with Ollama + LangChain 🚀
+# Ollama + DeepSeek Complete Guide 🚀
 
-This project runs the DeepSeek Coder model locally using Ollama and LangChain.
+This guide explains:
+
+- What is Ollama
+- How to install Ollama
+- How to run DeepSeek models
+- Useful Ollama commands
+- LangChain integration
+- Common errors and fixes
 
 ---
 
-# 1. Install Python Packages
+# What is Ollama?
 
-```bash
-pip install langchain langchain-ollama
-```
+Ollama lets you run AI models locally on your computer.
+
+You can run models like:
+
+- DeepSeek
+- Qwen
+- Llama
+- Mistral
+- Gemma
+- Phi
+
+without API keys.
+
+Official Website:
+
+https://ollama.com
 
 ---
 
-# 2. Install Ollama
+# Install Ollama (Windows)
 
-Download and install:
+## Step 1
+
+Download Ollama:
 
 https://ollama.com/download/windows
 
-After installation restart VS Code / Terminal.
+---
 
-Check installation:
+## Step 2
+
+Install normally like any software.
+
+---
+
+## Step 3
+
+Restart:
+
+- VS Code
+- PowerShell
+- CMD
+
+---
+
+# Check Installation
+
+Open terminal:
 
 ```bash
 ollama --version
 ```
 
+Example:
+
+```txt
+ollama version is 0.24.0
+```
+
 ---
 
-# 3. Download DeepSeek Coder Model
+# Start Ollama
+
+Usually Ollama starts automatically.
+
+If needed:
+
+```bash
+ollama serve
+```
+
+---
+
+# Fix "Port Already in Use"
+
+If you see:
+
+```txt
+Only one usage of each socket address...
+```
+
+It means Ollama is already running ✅
+
+You do NOT need `ollama serve`.
+
+---
+
+# Install DeepSeek Models
+
+## DeepSeek R1
+
+```bash
+ollama pull deepseek-r1
+```
+
+---
+
+## DeepSeek Coder
 
 ```bash
 ollama pull deepseek-coder
 ```
 
-or directly run:
+---
+
+# Run Models
+
+## Run DeepSeek R1
+
+```bash
+ollama run deepseek-r1
+```
+
+---
+
+## Run DeepSeek Coder
 
 ```bash
 ollama run deepseek-coder
@@ -42,38 +136,130 @@ ollama run deepseek-coder
 
 ---
 
-# 4. Start Ollama Server
+# Small Models (Better for Low RAM PCs)
 
-Open terminal:
+## 1.5B Model
 
 ```bash
-ollama serve
+ollama pull deepseek-r1:1.5b
 ```
 
-Keep this terminal running.
+Run:
+
+```bash
+ollama run deepseek-r1:1.5b
+```
 
 ---
 
-# 5. Python Code
+# Useful Ollama Commands
 
-Create `DeepSeek_Coder.py`
+## List Installed Models
+
+```bash
+ollama list
+```
+
+---
+
+## Remove Model
+
+```bash
+ollama rm deepseek-r1
+```
+
+---
+
+## Show Running Models
+
+```bash
+ollama ps
+```
+
+---
+
+## Stop Running Model
+
+```bash
+ollama stop deepseek-r1
+```
+
+---
+
+## Show Model Info
+
+```bash
+ollama show deepseek-r1
+```
+
+---
+
+## Update Ollama
+
+Download latest version again from:
+
+https://ollama.com/download
+
+---
+
+# Install Python Packages
+
+```bash
+pip install langchain langchain-ollama
+```
+
+---
+
+# Python Example
+
+Create `main.py`
 
 ```python
 from langchain_ollama import ChatOllama
 
-llm = ChatOllama(model="deepseek-coder")
+llm = ChatOllama(
+    model="deepseek-r1"
+)
 
-response = llm.invoke("Write snake game in python")
+response = llm.invoke(
+    "Explain reinforcement learning"
+)
 
 print(response.content)
 ```
 
 ---
 
-# 6. Run Project
+# Run Python File
 
 ```bash
-python DeepSeek_Coder.py
+python main.py
+```
+
+---
+
+# Change Models
+
+## DeepSeek Coder
+
+```python
+llm = ChatOllama(model="deepseek-coder")
+```
+
+---
+
+## Qwen3
+
+```python
+llm = ChatOllama(model="qwen3")
+```
+
+---
+
+## GLM4
+
+```python
+llm = ChatOllama(model="glm4")
 ```
 
 ---
@@ -82,11 +268,42 @@ python DeepSeek_Coder.py
 
 ## Error:
 ```txt
+'ollama' is not recognized
+```
+
+### Fix:
+
+Restart terminal or use:
+
+```powershell
+& "C:\Users\himan\AppData\Local\Programs\Ollama\ollama.exe" list
+```
+
+---
+
+## Error:
+```txt
+model not found
+```
+
+### Fix:
+
+Pull model first:
+
+```bash
+ollama pull deepseek-r1
+```
+
+---
+
+## Error:
+```txt
 WinError 10061
 ```
 
 ### Fix:
-Start Ollama server:
+
+Start Ollama:
 
 ```bash
 ollama serve
@@ -94,47 +311,15 @@ ollama serve
 
 ---
 
-## Error:
-```txt
-'ollama' is not recognized
-```
-
-### Fix:
-Install Ollama and restart terminal.
-
----
-
-# Useful Commands
-
-## List Installed Models
-
-```bash
-ollama list
-```
-
-## Remove Model
-
-```bash
-ollama rm deepseek-coder
-```
-
-## Run Chat
-
-```bash
-ollama run deepseek-coder
-```
-
----
-
 # Recommended Models
 
-| Model | Use Case |
+| Model | Best For |
 |---|---|
-| deepseek-coder | Coding |
 | deepseek-r1 | Reasoning |
+| deepseek-coder | Coding |
+| qwen3 | Best overall |
+| mistral | Fast |
 | llama3 | General AI |
-| mistral | Fast lightweight |
-| codellama | Code generation |
 
 ---
 
@@ -143,7 +328,7 @@ ollama run deepseek-coder
 ```txt
 project/
 │
-├── DeepSeek_Coder.py
+├── main.py
 ├── README.md
 └── venv/
 ```
